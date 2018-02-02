@@ -10,10 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "async": "^2.6.0",
     "axios": "^0.17.1",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "massive": "^4.6.3"
+    "massive": "^4.6.3",
+    "mongodb": "^3.0.2",
+    "uuid4": "^1.0.0"
   },
   "nodemonConfig": {
     "ext": "js json sql"

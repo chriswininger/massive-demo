@@ -26,6 +26,20 @@ module.exports = (app) => {
             });
         });
 
+        apiRouter.put('/apis/:apiID/addEndPoint', (req, res) => {
+            updateAPI(app, req.body.fields).then(api => {
+                console.log(api);
+                res.status(200).json({ status: 'success', api });
+            }).catch(err => {
+                console.warn(err);
+                res.status(500).json({ status: 'fail', message: err })
+            });
+        });
+
+        apiRouter.put('/apis/:apiID/end_points/:endPointID/addEndPoint', (req, res) => {
+            
+        });
+
         return apiRouter;
 }
 
