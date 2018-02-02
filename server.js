@@ -1,8 +1,9 @@
-const massive = require('massive');
 const express = require('express');
 const bodyParser = require('body-parser');
 const APIRouter = require('./routes/apis');
-const endPointRouter = require('./routes/endPoints');
+const ActionRouter = require('./routes/actions');
+const endPointRouter = require('./routes/end-points');
+const { connect } = require('./db/drivers/driverPostgres');
 
 const app = express();
 
@@ -13,17 +14,9 @@ app.use(bodyParser.json());
 
 // === make db connection
 console.info('connecting to the database');
-massive({
-    host: '127.0.0.1',
-    port: 5432,
-    database: 'massive-demo',
-    user: 'chris',
-    password: 'xxx',
-    scripts: './db'
-}).then(db => {
+connect().then(db => {
     console.info('connection established, run seeds');
     app.set('db', db);
-
     // start listening after db is setup
     db.seedDataBase().then(() => {
         app.listen(port);
@@ -39,6 +32,6 @@ massive({
 });
 
 // === define routes
-app.use('/api', [APIRouter(app), endPointRouter(app)]);
+app.use('/api', [APIRouter(app), endPointRouter(app), ActionRouter(app)]);
 app.use('/vendor', express.static('node_modules'));
 app.use('/', express.static('public'));
